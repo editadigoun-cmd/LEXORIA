@@ -2,17 +2,27 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import '../main.dart';
 import 'puzzle.dart';
+import 'campaign.dart';
 
 class GamePage extends StatefulWidget {
-  const GamePage({super.key, this.title = 'Campagne solo'});
+  const GamePage({
+    super.key,
+    this.title = 'Défi libre',
+    this.level,
+    this.onLevelCompleted,
+  });
   final String title;
+  final GameLevel? level;
+  final Future<void> Function(GameLevel level)? onLevelCompleted;
   @override
   State<GamePage> createState() => _GamePageState();
 }
 
 class _GamePageState extends State<GamePage> {
-  static const words = ['AFRIQUE', 'SAVANE', 'LION', 'BAOBAB', 'FLEUVE', 'ZEBRE'];
-  static const duration = 180;
+  List<String> get words => widget.level?.words ??
+      const ['AFRIQUE', 'SAVANE', 'LION', 'BAOBAB', 'FLEUVE', 'ZEBRE'];
+  int get duration => widget.level?.timeLimitSeconds ?? 180;
+  int get gridSize => widget.level?.gridSize ?? 10;
   late WordSearchPuzzle puzzle;
   final Set<String> found = {};
   final Set<GridPoint> foundCells = {};
@@ -22,6 +32,7 @@ class _GamePageState extends State<GamePage> {
   int seconds = duration;
   int score = 0;
   bool finished = false;
+  bool completionSaved = false;
   String? hint;
 
   @override
@@ -38,7 +49,7 @@ class _GamePageState extends State<GamePage> {
   }
 
   void _reset() {
-    puzzle = WordSearchPuzzle.generate(size: 10, words: words);
+    puzzle = WordSearchPuzzle.generate(size: gridSize, words: words);
     found.clear();
     foundCells.clear();
     selection = [];
@@ -46,6 +57,7 @@ class _GamePageState extends State<GamePage> {
     seconds = duration;
     score = 0;
     finished = false;
+    completionSaved = false;
     hint = null;
   }
 
@@ -129,6 +141,11 @@ class _GamePageState extends State<GamePage> {
   void _finish() {
     if (finished) return;
     timer?.cancel();
+    if (found.length == words.length && widget.level != null && !completionSaved) {
+      completionSaved = true;
+      final callback = widget.onLevelCompleted;
+      if (callback != null) unawaited(callback(widget.level!));
+    }
     setState(() => finished = true);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
@@ -207,7 +224,7 @@ class _GamePageState extends State<GamePage> {
                         padding: EdgeInsets.zero,
                         itemCount: puzzle.size * puzzle.size,
                         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 10, mainAxisSpacing: 2, crossAxisSpacing: 2,
+                          crossAxisCount: puzzle.size, mainAxisSpacing: 2, crossAxisSpacing: 2,
                         ),
                         itemBuilder: (context, index) {
                           final row = index ~/ puzzle.size;
