@@ -142,7 +142,14 @@ class _GamePageState extends State<GamePage> {
   void _finish() {
     if (finished) return;
     timer?.cancel();
-    unawaited(PlayerProfile.recordGame(won: found.length == words.length, score: score));
+    unawaited(PlayerProfile.recordGame(
+      won: found.length == words.length,
+      score: score,
+      wordsFound: found.length,
+      wordsTotal: words.length,
+      durationSeconds: duration - seconds,
+      mode: widget.title.toLowerCase().contains('quotidien') ? 'daily' : 'solo',
+    ));
     if (found.length == words.length && widget.level != null && !completionSaved) {
       completionSaved = true;
       final callback = widget.onLevelCompleted;
