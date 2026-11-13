@@ -18,7 +18,7 @@ class _LevelsPageState extends State<LevelsPage> {
 
   int get unlockedThrough {
     if (completed.isEmpty) return 1;
-    return (completed.reduce((a, b) => a > b ? a : b) + 1).clamp(1, 100);
+    return (completed.reduce((a, b) => a > b ? a : b) + 1).clamp(1, 100).toInt();
   }
 
   @override
