@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'game/game_page.dart';
+import 'game/levels_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -144,7 +145,7 @@ class HomePage extends StatelessWidget {
 
   void _openMode(BuildContext context, String mode) {
     Navigator.of(context).push(
-      MaterialPageRoute<void>(builder: (_) => mode == 'Mode Solo' ? const GamePage() : ModePreviewPage(mode: mode)),
+      MaterialPageRoute<void>(builder: (_) => mode == 'Mode Solo' ? const LevelsPage() : ModePreviewPage(mode: mode)),
     );
   }
 }
