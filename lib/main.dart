@@ -1,3 +1,5 @@
+import 'game/game_page.dart';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -142,7 +144,7 @@ class HomePage extends StatelessWidget {
 
   void _openMode(BuildContext context, String mode) {
     Navigator.of(context).push(
-      MaterialPageRoute<void>(builder: (_) => ModePreviewPage(mode: mode)),
+      MaterialPageRoute<void>(builder: (_) => mode == 'Mode Solo' ? const GamePage() : ModePreviewPage(mode: mode)),
     );
   }
 }
@@ -278,7 +280,7 @@ class _DailyCard extends StatelessWidget {
               ),
               onPressed: () => Navigator.of(context).push(
                 MaterialPageRoute<void>(
-                  builder: (_) => const ModePreviewPage(mode: 'Défi quotidien'),
+                  builder: (_) => const GamePage(title: 'Défi quotidien'),
                 ),
               ),
               child: const Row(
