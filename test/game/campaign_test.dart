@@ -27,5 +27,18 @@ void main() {
       expect(CampaignCatalog.all[80].gridSize, 12);
       expect(CampaignCatalog.all.last.difficulty, 'Expert');
     });
+    test('consecutive levels in the same theme do not reuse words', () {
+      for (var index = 0; index < CampaignCatalog.all.length - 1; index++) {
+        final current = CampaignCatalog.all[index];
+        final next = CampaignCatalog.all[index + 1];
+        if (current.category != next.category) continue;
+        expect(
+          current.words.toSet().intersection(next.words.toSet()),
+          isEmpty,
+          reason: 'Levels ${current.id} and ${next.id} repeat words',
+        );
+      }
+    });
+
   });
 }
