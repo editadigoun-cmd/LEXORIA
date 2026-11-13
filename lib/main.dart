@@ -1,6 +1,6 @@
-import 'game/game_page.dart';
-
 import 'package:flutter/material.dart';
+
+import 'game/game_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -349,6 +349,8 @@ class _ModeCard extends StatelessWidget {
                     Text(title, style: const TextStyle(color: LexoriaColors.white, fontSize: 15, fontWeight: FontWeight.w800)),
                     const SizedBox(height: 4),
                     Text(subtitle, style: const TextStyle(color: LexoriaColors.muted, fontSize: 11, height: 1.3)),
+                    const SizedBox(height: 5),
+                    Text(tag, style: TextStyle(color: accent, fontSize: 8, fontWeight: FontWeight.w900, letterSpacing: 1.2)),
                   ],
                 ),
               ),
