@@ -11,15 +11,15 @@ void main() {
 }
 
 abstract final class LexoriaColors {
-  static const background = Color(0xFF090E1C);
-  static const surface = Color(0xFF121B30);
-  static const surfaceLight = Color(0xFF1A2742);
-  static const violet = Color(0xFF9670FF);
-  static const violetBright = Color(0xFFB49AFF);
-  static const turquoise = Color(0xFF36D9C5);
-  static const gold = Color(0xFFF3C66A);
-  static const muted = Color(0xFF8D9AB5);
-  static const white = Color(0xFFF5F7FF);
+  static const background = Color(0xFF0B1017);
+  static const surface = Color(0xFF151F27);
+  static const surfaceLight = Color(0xFF202D34);
+  static const violet = Color(0xFFB6E36A);
+  static const violetBright = Color(0xFFD1F28E);
+  static const turquoise = Color(0xFF66D7C1);
+  static const gold = Color(0xFFFFA77A);
+  static const muted = Color(0xFF9AA9A7);
+  static const white = Color(0xFFF3F2E9);
 }
 
 class LexoriaApp extends StatelessWidget {
@@ -39,7 +39,7 @@ class LexoriaApp extends StatelessWidget {
           surface: LexoriaColors.surface,
         ),
         useMaterial3: true,
-        fontFamily: 'Roboto',
+        fontFamily: 'sans-serif',
       ),
       home: const HomePage(),
     );
@@ -57,7 +57,7 @@ class HomePage extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [Color(0xFF151632), LexoriaColors.background, Color(0xFF080D19)],
+            colors: [Color(0xFF172B2B), LexoriaColors.background, Color(0xFF0B1017)],
           ),
         ),
         child: SafeArea(
@@ -80,7 +80,7 @@ class HomePage extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 const Text(
-                  'Chaque grille cache une nouvelle victoire.',
+                  'Observe. Relie. Trouve le mot juste.',
                   style: TextStyle(color: LexoriaColors.muted, fontSize: 14),
                 ),
                 const SizedBox(height: 26),
@@ -165,10 +165,10 @@ class _TopBar extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
             gradient: const LinearGradient(
-              colors: [LexoriaColors.violet, Color(0xFF5943C8)],
+              colors: [LexoriaColors.violet, Color(0xFF6E9E42)],
             ),
             boxShadow: const [
-              BoxShadow(color: Color(0x449670FF), blurRadius: 20, offset: Offset(0, 5)),
+              BoxShadow(color: Color(0x447FA64A), blurRadius: 20, offset: Offset(0, 5)),
             ],
           ),
           child: const Icon(Icons.grid_view_rounded, color: Colors.white, size: 23),
@@ -223,80 +223,61 @@ class _DailyCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const letters = ['L', 'E', 'X', 'O', 'R', 'I', 'A', 'M', 'O'];
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(24),
-        gradient: const LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [Color(0xFF49358C), Color(0xFF24234F), Color(0xFF18213A)],
-        ),
-        border: Border.all(color: const Color(0x667F69D8)),
-        boxShadow: const [
-          BoxShadow(color: Color(0x332D236C), blurRadius: 28, offset: Offset(0, 12)),
-        ],
+        color: const Color(0xFFB6E36A),
+        borderRadius: BorderRadius.circular(25),
+        boxShadow: const [BoxShadow(color: Color(0x443D542A), blurRadius: 26, offset: Offset(0, 13))],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              const Icon(Icons.calendar_today_rounded, color: LexoriaColors.gold, size: 15),
-              const SizedBox(width: 8),
-              const Text(
-                'DÉFI QUOTIDIEN',
-                style: TextStyle(
-                  color: Color(0xFFE4D9FF),
-                  fontSize: 10,
-                  fontWeight: FontWeight.w800,
-                  letterSpacing: 1.6,
-                ),
-              ),
-              const Spacer(),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 5),
+          Row(children: [
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+              decoration: BoxDecoration(color: const Color(0xFF203329), borderRadius: BorderRadius.circular(30)),
+              child: const Text('ÉDITION DU JOUR', style: TextStyle(color: Color(0xFFD8F5A6), fontSize: 9, fontWeight: FontWeight.w900, letterSpacing: 1.4)),
+            ),
+            const Spacer(),
+            const Icon(Icons.bolt_rounded, color: Color(0xFF203329), size: 22),
+          ]),
+          const SizedBox(height: 18),
+          Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+            Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              const Text('Le rendez-vous\navec les mots.', style: TextStyle(color: Color(0xFF14231D), fontSize: 25, height: 1.08, fontWeight: FontWeight.w900, letterSpacing: -0.8)),
+              const SizedBox(height: 8),
+              const Text('Une grille. Six mots. À toi de jouer.', style: TextStyle(color: Color(0xCC203329), fontSize: 11, height: 1.35)),
+            ])),
+            const SizedBox(width: 8),
+            SizedBox(width: 102, child: GridView.count(
+              crossAxisCount: 3, shrinkWrap: true, physics: const NeverScrollableScrollPhysics(),
+              mainAxisSpacing: 4, crossAxisSpacing: 4, childAspectRatio: 1,
+              children: List.generate(9, (i) => Container(
+                alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: const Color(0x33FFFFFF),
-                  borderRadius: BorderRadius.circular(20),
+                  color: i == 4 || i == 5 || i == 8 ? const Color(0xFF203329) : const Color(0xFF9BC653),
+                  borderRadius: BorderRadius.circular(7),
                 ),
-                child: const Text('NOUVEAU', style: TextStyle(fontSize: 9, fontWeight: FontWeight.w800)),
-              ),
-            ],
-          ),
-          const SizedBox(height: 16),
-          const Text(
-            'Prêt à relever\nle défi du jour ?',
-            style: TextStyle(color: Colors.white, fontSize: 23, height: 1.15, fontWeight: FontWeight.w800),
-          ),
-          const SizedBox(height: 8),
-          const Text(
-            'Une grille spéciale. Des récompenses exclusives.',
-            style: TextStyle(color: Color(0xFFD0C9EC), fontSize: 12),
-          ),
+                child: Text(letters[i], style: TextStyle(color: i == 4 || i == 5 || i == 8 ? const Color(0xFFD8F5A6) : const Color(0xFF203329), fontWeight: FontWeight.w900, fontSize: 15)),
+              )),
+            )),
+          ]),
           const SizedBox(height: 18),
           SizedBox(
-            height: 45,
+            height: 47, width: double.infinity,
             child: FilledButton(
               style: FilledButton.styleFrom(
-                backgroundColor: LexoriaColors.white,
-                foregroundColor: const Color(0xFF30245E),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(13)),
+                backgroundColor: const Color(0xFF172B25), foregroundColor: const Color(0xFFF3F2E9),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
               ),
-              onPressed: () => Navigator.of(context).push(
-                MaterialPageRoute<void>(
-                  builder: (_) => const GamePage(title: 'Défi quotidien'),
-                ),
-              ),
-              child: const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('JOUER MAINTENANT', style: TextStyle(fontWeight: FontWeight.w900, letterSpacing: 0.8)),
-                  SizedBox(width: 8),
-                  Icon(Icons.arrow_forward_rounded, size: 17),
-                ],
-              ),
+              onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const GamePage(title: 'Défi quotidien'))),
+              child: const Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                Text('LANCER LE DÉFI', style: TextStyle(fontWeight: FontWeight.w900, letterSpacing: 1)),
+                SizedBox(width: 9), Icon(Icons.arrow_outward_rounded, size: 17),
+              ]),
             ),
           ),
         ],
@@ -334,7 +315,7 @@ class _ModeCard extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(19),
-            border: Border.all(color: const Color(0xFF26334E)),
+            border: Border.all(color: const Color(0xFF2D3D3C)),
           ),
           child: Row(
             children: [
