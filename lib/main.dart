@@ -1,4 +1,4 @@
-import 'package:material_ui/material_ui.dart';
+import 'package:flutter/material.dart';
 
 import 'game/game_page.dart';
 import 'game/levels_page.dart';
