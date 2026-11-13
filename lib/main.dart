@@ -246,7 +246,7 @@ class _DailyCard extends StatelessWidget {
           ]),
           const SizedBox(height: 18),
           Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-            Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            const Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               const Text('Le rendez-vous\navec les mots.', style: TextStyle(color: Color(0xFF14231D), fontSize: 25, height: 1.08, fontWeight: FontWeight.w900, letterSpacing: -0.8)),
               const SizedBox(height: 8),
               const Text('Une grille. Six mots. À toi de jouer.', style: TextStyle(color: Color(0xCC203329), fontSize: 11, height: 1.35)),
