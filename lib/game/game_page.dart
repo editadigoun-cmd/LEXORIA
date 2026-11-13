@@ -29,7 +29,7 @@ class _GamePageState extends State<GamePage> {
   List<GridPoint> selection = [];
   GridPoint? start;
   Timer? timer;
-  int seconds = duration;
+  late int seconds;
   int score = 0;
   bool finished = false;
   bool completionSaved = false;
@@ -223,7 +223,7 @@ class _GamePageState extends State<GamePage> {
                         physics: const NeverScrollableScrollPhysics(),
                         padding: EdgeInsets.zero,
                         itemCount: puzzle.size * puzzle.size,
-                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: puzzle.size, mainAxisSpacing: 2, crossAxisSpacing: 2,
                         ),
                         itemBuilder: (context, index) {
