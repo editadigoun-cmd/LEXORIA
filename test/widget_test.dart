@@ -7,6 +7,6 @@ void main() {
 
     expect(find.text('LEXORIA'), findsOneWidget);
     expect(find.text('Mode Solo'), findsOneWidget);
-    expect(find.text('Défi quotidien'), findsOneWidget);
+    expect(find.text('DÉFI QUOTIDIEN'), findsOneWidget);
   });
 }
