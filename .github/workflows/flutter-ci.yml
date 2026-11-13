@@ -22,8 +22,19 @@ jobs:
         run: flutter pub get
       - name: Analyze Dart code
         run: flutter analyze
+      - name: Run tests
+        run: flutter test
+      - name: Build Android APK
+        run: flutter build apk --release
       - name: Build Android App Bundle
         run: flutter build appbundle --release
+      - name: Upload Android APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: lexoria-android-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
+          if-no-files-found: error
+          retention-days: 14
 
   ios:
     name: iOS build
@@ -39,5 +50,7 @@ jobs:
         run: flutter pub get
       - name: Analyze Dart code
         run: flutter analyze
+      - name: Run tests
+        run: flutter test
       - name: Build iOS without code signing
         run: flutter build ios --release --no-codesign
