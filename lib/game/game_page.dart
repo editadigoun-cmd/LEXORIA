@@ -189,8 +189,8 @@ class _GamePageState extends State<GamePage> {
                 const SizedBox(height: 12),
                 Center(
                   child: GestureDetector(
-                    onPanStart: (d) => _startAt(d.localPosition, boardSize),
-                    onPanUpdate: (d) => _moveTo(d.localPosition, boardSize),
+                    onPanStart: (d) => _startAt(Offset(d.localPosition.dx - 7, d.localPosition.dy - 7), boardSize - 14),
+                    onPanUpdate: (d) => _moveTo(Offset(d.localPosition.dx - 7, d.localPosition.dy - 7), boardSize - 14),
                     onPanEnd: (_) => _end(),
                     child: Container(
                       width: boardSize,
@@ -201,7 +201,8 @@ class _GamePageState extends State<GamePage> {
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(color: const Color(0xFF293653)),
                       ),
-                      child: GridView.builder(
+                      child: IgnorePointer(
+                        child: GridView.builder(
                         physics: const NeverScrollableScrollPhysics(),
                         padding: EdgeInsets.zero,
                         itemCount: puzzle.size * puzzle.size,
@@ -238,6 +239,7 @@ class _GamePageState extends State<GamePage> {
                             ),
                           );
                         },
+                      ),
                       ),
                     ),
                   ),
