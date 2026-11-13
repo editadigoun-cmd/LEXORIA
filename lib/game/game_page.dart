@@ -3,6 +3,7 @@ import 'package:material_ui/material_ui.dart';
 import '../main.dart';
 import 'puzzle.dart';
 import 'campaign.dart';
+import 'player_profile.dart';
 
 class GamePage extends StatefulWidget {
   const GamePage({
@@ -141,6 +142,7 @@ class _GamePageState extends State<GamePage> {
   void _finish() {
     if (finished) return;
     timer?.cancel();
+    unawaited(PlayerProfile.recordGame(won: found.length == words.length, score: score));
     if (found.length == words.length && widget.level != null && !completionSaved) {
       completionSaved = true;
       final callback = widget.onLevelCompleted;
