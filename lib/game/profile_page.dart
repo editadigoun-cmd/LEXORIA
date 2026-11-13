@@ -30,7 +30,7 @@ class _ProfilePageState extends State<ProfilePage> {
     setState(() {
       profile = saved;
       _nameController.text = saved.name;
-      selectedAvatar = saved.avatarIndex.clamp(0, _avatars.length - 1);
+      selectedAvatar = saved.avatarIndex.clamp(0, _avatars.length - 1).toInt();
       loading = false;
     });
   }
