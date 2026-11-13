@@ -2,6 +2,8 @@ import 'package:material_ui/material_ui.dart';
 
 import 'game/game_page.dart';
 import 'game/levels_page.dart';
+import 'game/profile_page.dart';
+import 'game/player_profile.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -198,15 +200,18 @@ class _TopBar extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 9),
-        Container(
-          width: 40,
-          height: 40,
-          decoration: BoxDecoration(
-            color: LexoriaColors.surfaceLight,
-            shape: BoxShape.circle,
-            border: Border.all(color: const Color(0xFF394666)),
+        GestureDetector(
+          onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const ProfilePage())),
+          child: Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              color: LexoriaColors.surfaceLight,
+              shape: BoxShape.circle,
+              border: Border.all(color: const Color(0xFF394666)),
+            ),
+            child: const Icon(Icons.person_rounded, color: LexoriaColors.violetBright),
           ),
-          child: const Icon(Icons.person_rounded, color: LexoriaColors.violetBright),
         ),
       ],
     );
@@ -370,22 +375,28 @@ class _StatsRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 17, horizontal: 12),
-      decoration: BoxDecoration(
-        color: const Color(0xFF10182A),
-        borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: const Color(0xFF202D46)),
-      ),
-      child: const Row(
-        children: [
-          Expanded(child: _StatItem(value: '0', label: 'PARTIES')),
-          _StatDivider(),
-          Expanded(child: _StatItem(value: '0', label: 'VICTOIRES')),
-          _StatDivider(),
-          Expanded(child: _StatItem(value: '0', label: 'SÉRIES')),
-        ],
-      ),
+    return FutureBuilder<PlayerProfile>(
+      future: PlayerProfile.load(),
+      builder: (context, snapshot) {
+        final profile = snapshot.data;
+        return Container(
+          padding: const EdgeInsets.symmetric(vertical: 17, horizontal: 12),
+          decoration: BoxDecoration(
+            color: const Color(0xFF10182A),
+            borderRadius: BorderRadius.circular(18),
+            border: Border.all(color: const Color(0xFF202D46)),
+          ),
+          child: Row(
+            children: [
+              Expanded(child: _StatItem(value: '${profile?.gamesPlayed ?? 0}', label: 'PARTIES')),
+              const _StatDivider(),
+              Expanded(child: _StatItem(value: '${profile?.wins ?? 0}', label: 'VICTOIRES')),
+              const _StatDivider(),
+              Expanded(child: _StatItem(value: '${profile?.bestScore ?? 0}', label: 'RECORD')),
+            ],
+          ),
+        );
+      },
     );
   }
 }
