@@ -42,7 +42,10 @@ class CampaignCatalog {
       for (var stage = 0; stage < 10; stage++) {
         final size = id <= 20 ? 8 : id <= 50 ? 9 : id <= 80 ? 10 : 12;
         final count = id <= 20 ? 5 : id <= 60 ? 6 : 7;
-        final selected = List.generate(count, (i) => words[(stage + i * 2) % words.length]);
+        // Space consecutive levels across the theme vocabulary instead of taking
+        // near-identical overlapping slices. This reduces back-to-back repeats.
+        final start = (stage * 8) % words.length;
+        final selected = List.generate(count, (i) => words[(start + i) % words.length]);
         levels.add(GameLevel(
           id: id,
           title: 'Niveau $id',
