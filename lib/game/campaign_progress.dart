@@ -17,7 +17,7 @@ class CampaignProgress {
     completed.add(levelId);
     await prefs.setStringList(
       _completedKey,
-      completed.toList()..sort(),
+      completed.map((id) => id.toString()).toList()..sort(),
     );
   }
 }
