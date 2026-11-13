@@ -14,6 +14,11 @@ module.exports = async (req, res) => {
     if (req.method === "POST" && action === "profile") {
       const name = String(req.body?.name || "Joueur").trim().slice(0, 20) || "Joueur";
       const avatar = String(req.body?.avatarKey || "spark").slice(0, 40);
+      const playerId = req.body?.playerId;
+      if (playerId && /^[0-9a-f-]{36}$/i.test(String(playerId))) {
+        const rows = await sql`UPDATE player_profiles SET player_name = ${name}, avatar_key = ${avatar}, updated_at = now() WHERE id = ${playerId} RETURNING id, player_name, avatar_key, created_at`;
+        if (rows.length) return res.status(200).json({ profile: rows[0] });
+      }
       const rows = await sql`INSERT INTO player_profiles (player_name, avatar_key) VALUES (${name}, ${avatar}) RETURNING id, player_name, avatar_key, created_at`;
       return res.status(201).json({ profile: rows[0] });
     }
