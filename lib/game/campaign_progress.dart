@@ -13,7 +13,8 @@ class CampaignProgress {
 
   static Future<void> complete(int levelId) async {
     final prefs = await SharedPreferences.getInstance();
-    final completed = await loadCompleted()..add(levelId);
+    final completed = await loadCompleted();
+    completed.add(levelId);
     await prefs.setStringList(
       _completedKey,
       completed.toList()..sort(),
