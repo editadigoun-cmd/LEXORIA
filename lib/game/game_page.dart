@@ -21,7 +21,7 @@ class GamePage extends StatefulWidget {
 
 class _GamePageState extends State<GamePage> {
   List<String> get words => widget.level?.words ??
-      const ['AFRIQUE', 'SAVANE', 'LION', 'BAOBAB', 'FLEUVE', 'ZEBRE'];
+      const ['PLANETE', 'MUSIQUE', 'VOYAGE', 'NUAGE', 'JARDIN', 'LUMIERE'];
   int get duration => widget.level?.timeLimitSeconds ?? 180;
   int get gridSize => widget.level?.gridSize ?? 10;
   late WordSearchPuzzle puzzle;
