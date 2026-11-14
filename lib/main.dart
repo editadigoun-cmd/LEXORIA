@@ -4,6 +4,7 @@ import 'game/game_page.dart';
 import 'game/levels_page.dart';
 import 'game/profile_page.dart';
 import 'game/player_profile.dart';
+import 'game/leaderboard_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -121,6 +122,17 @@ class HomePage extends StatelessWidget {
                   tag: 'À DISTANCE',
                   accent: LexoriaColors.gold,
                   onTap: () => _openMode(context, 'Défis entre amis'),
+                ),
+                const SizedBox(height: 12),
+                _ModeCard(
+                  icon: Icons.emoji_events_rounded,
+                  title: 'Classement mondial',
+                  subtitle: 'Compare ton meilleur score avec les joueurs du monde entier.',
+                  tag: 'GLOBAL',
+                  accent: LexoriaColors.violetBright,
+                  onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute<void>(builder: (_) => const LeaderboardPage()),
+                  ),
                 ),
                 const SizedBox(height: 26),
                 const _StatsRow(),
