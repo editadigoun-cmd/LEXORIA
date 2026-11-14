@@ -61,7 +61,8 @@ class CampaignCatalog {
         id++;
       }
     }
-    if (id != 101 || used.length != 500) {
+    final campaignWords = levels.expand((level) => level.words).toSet();
+    if (id != 101 || campaignWords.length != 500) {
       throw StateError('Campaign must contain 100 levels and 500 unique words.');
     }
     return List.unmodifiable(levels);
