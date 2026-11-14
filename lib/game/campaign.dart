@@ -48,7 +48,11 @@ class CampaignCatalog {
       final themeWords = uniqueWords.take(50).toList();
       for (var stage = 0; stage < 10; stage++) {
         final start = stage * 5;
-        final size = id <= 20 ? 8 : id <= 50 ? 9 : id <= 80 ? 10 : 12;
+        final baseSize = id <= 20 ? 8 : id <= 50 ? 9 : id <= 80 ? 10 : 12;
+        final size = themeWords.sublist(start, start + 5).fold<int>(
+          baseSize,
+          (current, word) => word.length > current ? word.length : current,
+        );
         levels.add(GameLevel(
           id: id,
           title: 'Niveau $id',
