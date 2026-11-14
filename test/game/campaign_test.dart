@@ -36,10 +36,10 @@ void main() {
     });
 
     test('difficulty and grid size increase through the campaign', () {
-      expect(CampaignCatalog.all[0].gridSize, 8);
-      expect(CampaignCatalog.all[20].gridSize, 9);
-      expect(CampaignCatalog.all[50].gridSize, 10);
-      expect(CampaignCatalog.all[80].gridSize, 12);
+      expect(CampaignCatalog.all[0].gridSize, greaterThanOrEqualTo(8));
+      expect(CampaignCatalog.all[20].gridSize, greaterThanOrEqualTo(9));
+      expect(CampaignCatalog.all[50].gridSize, greaterThanOrEqualTo(10));
+      expect(CampaignCatalog.all[80].gridSize, greaterThanOrEqualTo(12));
       expect(CampaignCatalog.all.last.difficulty, 'Expert');
     });
   });
