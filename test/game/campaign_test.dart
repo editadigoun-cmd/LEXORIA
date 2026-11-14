@@ -10,14 +10,29 @@ void main() {
       expect(CampaignCatalog.all.last.id, 100);
     });
 
-    test('every word fits its level grid', () {
+    test('contains exactly 500 globally unique words', () {
+      final allWords = CampaignCatalog.all.expand((level) => level.words).toList();
+      expect(allWords, hasLength(500));
+      expect(allWords.toSet(), hasLength(500));
+    });
+
+    test('every level has five words and every word fits its grid', () {
       for (final level in CampaignCatalog.all) {
-        expect(level.words, isNotEmpty, reason: 'Level ${level.id}');
+        expect(level.words, hasLength(5), reason: 'Level ${level.id}');
         for (final word in level.words) {
           expect(word.length, lessThanOrEqualTo(level.gridSize),
               reason: '${level.title}: $word does not fit a ${level.gridSize} grid');
         }
       }
+    });
+
+    test('campaign uses international themes and has no regional Africa category', () {
+      final categories = CampaignCatalog.all.map((level) => level.category).toSet();
+      expect(categories, hasLength(10));
+      expect(categories, isNot(contains('Afrique')));
+      expect(categories, contains('Nature'));
+      expect(categories, contains('Voyages'));
+      expect(categories, contains('Espace'));
     });
 
     test('difficulty and grid size increase through the campaign', () {
@@ -27,18 +42,5 @@ void main() {
       expect(CampaignCatalog.all[80].gridSize, 12);
       expect(CampaignCatalog.all.last.difficulty, 'Expert');
     });
-    test('consecutive levels in the same theme do not reuse words', () {
-      for (var index = 0; index < CampaignCatalog.all.length - 1; index++) {
-        final current = CampaignCatalog.all[index];
-        final next = CampaignCatalog.all[index + 1];
-        if (current.category != next.category) continue;
-        expect(
-          current.words.toSet().intersection(next.words.toSet()),
-          isEmpty,
-          reason: 'Levels ${current.id} and ${next.id} repeat words',
-        );
-      }
-    });
-
   });
 }
