@@ -103,7 +103,14 @@ class PlayerProfile {
       await prefs.setInt(_bestKey, score);
     }
 
-    final playerId = prefs.getString(_remoteIdKey);
+    var playerId = prefs.getString(_remoteIdKey);
+    if (playerId == null) {
+      playerId = await _syncProfile(
+        name: prefs.getString(_nameKey) ?? 'Joueur',
+        avatarIndex: prefs.getInt(_avatarKey) ?? 0,
+      );
+      if (playerId != null) await prefs.setString(_remoteIdKey, playerId);
+    }
     if (playerId == null) return;
     try {
       await http
